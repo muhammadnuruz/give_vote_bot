@@ -5,7 +5,8 @@ from aiogram.utils import executor
 from aiogram.dispatcher.filters import Command
 
 API_TOKEN = "8146850036:AAFsrvfEb-prk-W7TSy6t-jFPAfvbcgnKG4"
-REQUIRED_CHANNELS = ["@Bosqichma_Bosqich_Rivojlanish"]
+
+REQUIRED_CHANNELS = ["@Bosqichma_Bosqich_Rivojlanish", "@TOSHVIL_SPORT"]
 admins = [1974800905]
 
 logging.basicConfig(level=logging.INFO)
