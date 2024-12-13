@@ -5,8 +5,7 @@ from aiogram.utils import executor
 from aiogram.dispatcher.filters import Command
 
 API_TOKEN = "8146850036:AAFsrvfEb-prk-W7TSy6t-jFPAfvbcgnKG4"
-
-REQUIRED_CHANNELS = ["@Bosqichma_Bosqich_Rivojlanish", "@TOSHVIL_SPORT"]
+REQUIRED_CHANNELS = ["@Bosqichma_Bosqich_Rivojlanish"]
 admins = [1974800905]
 
 logging.basicConfig(level=logging.INFO)
@@ -67,7 +66,9 @@ def save_user(user: types.User):
 def generate_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=3)
     for index, name in enumerate(electors, start=1):
-        keyboard.add(InlineKeyboardButton(text=name, callback_data=f"vote_{index}"))
+        votes = get_votes_for_elector(name)
+        button_text = f"{name} ({votes} ovoz)"
+        keyboard.add(InlineKeyboardButton(text=button_text, callback_data=f"vote_{index}"))
     return keyboard
 
 
@@ -79,6 +80,18 @@ def get_total_votes():
     except FileNotFoundError:
         pass
     return total_votes
+
+
+def get_votes_for_elector(elector_name):
+    count = 0
+    try:
+        file_name = f"vote_{elector_name}.txt"
+        with open(file_name, "r", encoding="utf-8") as file:
+            data = file.readlines()
+            count = int(data[0])
+    except FileNotFoundError:
+        pass
+    return count
 
 
 async def check_subscription(user_id):
@@ -136,10 +149,9 @@ Ism-Familiya: {message.from_user.full_name}""", parse_mode='HTML')
             await message.answer("Saylanuvchilar ro'yxati bo'sh!")
             return
 
-        await message.answer(
-            "Ovoz berish uchun quyidagi tugmalardan birini tanlang:",
-            reply_markup=generate_keyboard()
-        )
+        with open('12.jpg', 'rb') as photo:
+            await message.answer_photo(photo=photo, caption="Ovoz berish uchun quyidagi tugmalardan birini tanlang:",
+                                       reply_markup=generate_keyboard())
 
 
 @dp.callback_query_handler(lambda c: c.data and c.data.startswith("vote_"))
@@ -186,47 +198,14 @@ async def process_vote(callback_query: types.CallbackQuery):
     with open("all_votes.txt", "a+", encoding="utf-8") as file:
         file.write(f"{user_id},{elector_name}\n")
 
-    await bot.answer_callback_query(
-        callback_query.id,
-        f"{elector_name} uchun ovoz berildi!",
-        show_alert=True
-    )
-    await callback_query.message.delete()
-
-
-@dp.message_handler(Command("statistic"))
-async def show_statistics(message: types.Message):
-    electors_count = len(electors)
-
-    total_voters = set()
-    vote_count = {elector: 0 for elector in electors}
-
-    try:
-        with open("all_votes.txt", "r", encoding="utf-8") as file:
-            data = file.readlines()
-            for line in data:
-                user_id, elector_name = line.strip().split(",")
-                total_voters.add(user_id)
-                if elector_name in vote_count:
-                    vote_count[elector_name] += 1
-    except FileNotFoundError:
-        pass
-
-    total_vote_count = sum(vote_count.values())
-
-    statistics = "\n".join([f"{name}: {count} ovoz" for name, count in vote_count.items()])
-
-    if not statistics:
-        statistics = "Hozircha ovozlar mavjud emas."
-
-    await message.answer(
-        f"Umumiy statistika:\n"
-        f"Saylanuvchilar soni: {electors_count}\n"
-        f"Ovoz bergan foydalanuvchilar soni: {len(total_voters)}\n"
-        f"Jami ovozlar soni: {total_vote_count}\n\n"
-        f"Saylanishdagi ovozlar:\n{statistics}"
+    await bot.answer_callback_query(callback_query.id, "Ovozingiz qabul qilindi!")
+    await bot.edit_message_caption(
+        caption=f"Ovozlar soni: {count}",
+        chat_id=callback_query.message.chat.id,
+        message_id=callback_query.message.message_id,
+        reply_markup=generate_keyboard()
     )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
