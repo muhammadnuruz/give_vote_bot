@@ -19,7 +19,7 @@ electors = [
     "Doniyor Rixsibayev",
     "Davron Xalikov",
     "Botirali Matkarimov",
-    "Shuhrat Pahmatov",
+    "Shuhrat Rahmatov",
     "O‘tkirbek Abdullayev",
     "Bekjon Yusupov",
     "Elyorjon Umaraliyev",
