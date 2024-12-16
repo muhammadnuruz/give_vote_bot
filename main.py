@@ -44,7 +44,7 @@ electors = [
     "Avzalxo‘ja Saidxo‘jayev",
     "Anvarbek Djunusov",
     "Farxod Babakalanov",
-    "Sandar Djangabayev",
+    "Sanjar Djangabayev",
     "Jasur Umarov"
 ]
 
