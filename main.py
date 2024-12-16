@@ -40,7 +40,7 @@ electors = [
     "Murodjon Akbarov",
     "Sa’dullo Raxmatillayev",
     "Olga Xalikova",
-    "Usmonjan Karimov",
+    "Usmonjon Karimov",
     "Avzalxo‘ja Saidxo‘jayev",
     "Anvarbek Djunusov",
     "Farxod Babakalanov",
