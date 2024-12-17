@@ -192,7 +192,7 @@ async def process_vote(callback_query: types.CallbackQuery):
 
     await bot.answer_callback_query(callback_query.id, "Ovozingiz qabul qilindi!")
     await bot.edit_message_caption(
-        caption=f"Ovozlar soni: {count}",
+        caption=f"ovozlar son: {count}",
         chat_id=callback_query.message.chat.id,
         message_id=callback_query.message.message_id,
         reply_markup=generate_keyboard()
