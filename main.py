@@ -142,7 +142,18 @@ Ism-Familiya: {message.from_user.full_name}""", parse_mode='HTML')
             return
 
         with open('12.jpg', 'rb') as photo:
-            await message.answer_photo(photo=photo, caption="Ovoz berish uchun quyidagi tugmalardan birini tanlang:",
+            await message.answer_photo(photo=photo, caption="""
+🎤Diqqat, so‘rovnoma!
+
+VILOYATDA SPORT SOXASI ENG FAOL RIVOJLANAYOTGAN SHAHAR-TUMANGA OVOZ BЕRING!
+
+Toshkent viloyati Sport boshqarmasi sport sohasini rivojlanishida yilning eng yaxshi shahar-tumanlarni aniqlashga kirishdi.
+
+☑️Sizningcha, qaysi shahar-tumanlar yilning eng yaxshisi bo‘lishga loyiq? Munosiblarni qo‘llab-quvvatlang!
+
+⚠️Eslatma: turli botlar orqali sun’iy ovoz jamg‘arishga intilganlar so‘rovnomadan chetlashtiriladi.
+
+⏰So‘rovnoma 27-dekabr kuni soat 17:00 ga qadar davom etadi. Eng ko‘p ovoz to‘plagan 3 ta shahar-tumanlar yil yakunida viloyat Sport boshqarmasi tomonidan sertifikat va qimmatbaho sovg‘a bilan taqdirlanadi.""",
                                        reply_markup=generate_keyboard())
 
 
@@ -192,7 +203,20 @@ async def process_vote(callback_query: types.CallbackQuery):
 
     await bot.answer_callback_query(callback_query.id, "Ovozingiz qabul qilindi!")
     await bot.edit_message_caption(
-        caption=f"ovozlar son: {count}",
+        caption=f"""
+🎤Diqqat, so‘rovnoma!
+
+VILOYATDA SPORT SOXASI ENG FAOL RIVOJLANAYOTGAN SHAHAR-TUMANGA OVOZ BЕRING!
+
+Toshkent viloyati Sport boshqarmasi sport sohasini rivojlanishida yilning eng yaxshi shahar-tumanlarni aniqlashga kirishdi.
+
+☑️Sizningcha, qaysi shahar-tumanlar yilning eng yaxshisi bo‘lishga loyiq? Munosiblarni qo‘llab-quvvatlang!
+
+⚠️Eslatma: turli botlar orqali sun’iy ovoz jamg‘arishga intilganlar so‘rovnomadan chetlashtiriladi.
+
+⏰So‘rovnoma 27-dekabr kuni soat 17:00 ga qadar davom etadi. Eng ko‘p ovoz to‘plagan 3 ta shahar-tumanlar yil yakunida viloyat Sport boshqarmasi tomonidan sertifikat va qimmatbaho sovg‘a bilan taqdirlanadi.
+
+ovozlar son: {count}""",
         chat_id=callback_query.message.chat.id,
         message_id=callback_query.message.message_id,
         reply_markup=generate_keyboard()
